@@ -1,21 +1,11 @@
 const path = require('path')
+const fs = require('fs')
 
 const args = process.argv.splice(2)
 const command = args.shift()
 let taskDescription = args.join(' ')
 const file = path.join(process.cwd(), '/tasks')
 
-switch (command) {
-    case 'list':
-        listTasks(file)
-        break
-    case 'add':
-        addTask(file, taskDescription)
-        break
-    default:
-        console.log('Use: ' + process.argv[0] + 'list|add[opis_zadania]')
-        break
-}
 
 const loadOrInitializeTaskArray = (file, cb) => {
     fs.exists(file, (exists) => {
@@ -53,4 +43,16 @@ const addTask = (file, taskDescription) => {
         tasks.push(taskDescription)
         storeTasks(file, tasks)
     })
+}
+
+switch (command) {
+    case 'list':
+        listTasks(file)
+        break
+    case 'add':
+        addTask(file, taskDescription)
+        break
+    default:
+        console.log('Use: ' + process.argv[0] + 'list|add[opis_zadania]')
+        break
 }
